@@ -1,0 +1,25 @@
+{
+  "name": "carbon-footprint-tracker",
+  "version": "1.0.0",
+  "description": "Calculate and reduce your carbon footprint with simple habits and personalized insights.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev --port 8889",
+    "test": "node test/calculator.test.js"
+  },
+  "dependencies": {
+    "@netlify/database": "^1.0.0",
+    "drizzle-orm": "^0.30.10",
+    "pg": "^8.11.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^2.6.0",
+    "@types/node": "^20.12.12",
+    "@types/pg": "^8.11.6",
+    "@types/uuid": "^9.0.8",
+    "drizzle-kit": "^0.21.4",
+    "typescript": "^5.4.5"
+  }
+}
