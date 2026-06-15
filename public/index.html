@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbon Tracker — Measure, Track & Reduce Your Carbon Footprint</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- App Shell -->
+  <div class="app-container">
+    
+    <!-- Top Header Navigation -->
+    <header class="main-header">
+      <div class="brand">
+        <div class="logo-icon">🌿</div>
+        <div class="brand-text">
+          <h1>CarbonTracker</h1>
+          <span>Your Personal Climate Companion</span>
+        </div>
+      </div>
+      <div class="user-profile">
+        <span class="user-badge">🌱 Level <span id="user-level">1</span></span>
+        <div class="session-info">
+          <input type="text" id="user-name-input" value="Eco Explorer" placeholder="Your Name" title="Click to rename" />
+          <span id="session-token-display">...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Grid Dashboard -->
+    <main class="dashboard-grid">
+
+      <!-- Left Column: Carbon Metric -->
+      <section class="dashboard-card carbon-score-card">
+        <h2>Your Annual Carbon Footprint</h2>
+        <p class="card-subtitle">Calculated in kilograms of CO2 equivalent (kg CO2e)</p>
+        <div class="score-display-container">
+          <div class="radial-progress-wrapper">
+            <svg class="radial-svg" viewBox="0 0 160 160">
+              <circle class="radial-bg" cx="80" cy="80" r="70"></circle>
+              <circle class="radial-bar" id="score-radial-bar" cx="80" cy="80" r="70" style="stroke-dashoffset: 440;"></circle>
+            </svg>
+            <div class="score-inner">
+              <span class="score-value" id="total-co2-display">0</span>
+              <span class="score-unit">kg CO2e/yr</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="score-context">
+          <div class="comparison-bar">
+            <div class="comparison-item">
+              <span class="comparison-label">You</span>
+              <span class="comparison-val" id="user-footprint-val">0 t</span>
+            </div>
+            <div class="comparison-item">
+              <span class="comparison-label">World Avg</span>
+              <span class="comparison-val">4.8 t</span>
+            </div>
+            <div class="comparison-item">
+              <span class="comparison-label">2030 Target</span>
+              <span class="comparison-val">&lt; 2.0 t</span>
+            </div>
+          </div>
+          <p class="comparison-text" id="comparison-feedback">Please calculate your footprint to see where you stand.</p>
+        </div>
+
+        <button class="btn btn-primary" id="open-calc-btn">
+          <span>🔄 Recalculate Footprint</span>
+        </button>
+      </section>
+
+      <!-- Center Column: Visual Analytics -->
+      <section class="dashboard-card analytics-card">
+        <h2>Emissions Breakdown</h2>
+        <p class="card-subtitle">Visual analysis of your carbon categories</p>
+        
+        <div class="chart-container">
+          <div class="donut-chart-wrapper" id="donut-chart-container">
+            <!-- Programmatic SVG Donut generated via JS -->
+            <svg class="donut-svg" viewBox="0 0 100 100" id="donut-svg">
+              <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f1f5f9" stroke-width="20"></circle>
+            </svg>
+          </div>
+          
+          <div class="chart-legend" id="chart-legend">
+            <div class="legend-item"><span class="color-dot transport"></span> Transport: 0%</div>
+            <div class="legend-item"><span class="color-dot energy"></span> Home Energy: 0%</div>
+            <div class="legend-item"><span class="color-dot food"></span> Diet: 0%</div>
+            <div class="legend-item"><span class="color-dot waste"></span> Waste: 0%</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Personalized Insights -->
+      <section class="dashboard-card insights-card">
+        <div class="card-header-icon">💡</div>
+        <h2>Climate Insights</h2>
+        <p class="card-subtitle">Dynamic actions tailored to your biggest impact area</p>
+        <div class="insight-content">
+          <p id="insight-text">Welcome! Calculate your carbon footprint to receive personalized climate tips on how to decrease emissions efficiently.</p>
+        </div>
+        <div class="tracker-summary">
+          <div class="summary-metric">
+            <span class="metric-num" id="total-saved-co2">0.0</span>
+            <span class="metric-label">kg CO2e Saved Today</span>
+          </div>
+          <div class="summary-metric">
+            <span class="metric-num" id="active-goals-count">0</span>
+            <span class="metric-label">Active Habits</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Habits & Actions Section -->
+    <section class="actions-section">
+      <div class="section-header">
+        <h2>Everyday Habits & Reduction Actions</h2>
+        <p class="section-subtitle">Commit to simple daily habits, log them as completed, and track your immediate carbon savings!</p>
+      </div>
+
+      <div class="habits-grid" id="habits-grid">
+        <!-- Generated dynamically via JS -->
+      </div>
+    </section>
+
+    <!-- Footer History and Log -->
+    <footer class="dashboard-footer">
+      <div class="history-card">
+        <h2>Your Calculation History</h2>
+        <div class="table-responsive">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Transport</th>
+                <th>Home Energy</th>
+                <th>Dietary</th>
+                <th>Waste</th>
+                <th>Total Footprint</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body">
+              <tr>
+                <td colspan="6" class="empty-state">No historical logs found. Calculate your footprint above to start.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Footprint Calculator Multi-Step Modal -->
+  <div class="modal-overlay" id="calculator-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Calculate Your Carbon Footprint</h2>
+        <button class="modal-close" id="close-calc-btn">&times;</button>
+      </div>
+      
+      <!-- Stepper Header -->
+      <div class="stepper-header">
+        <div class="step-dot active" data-step="1">1. Transport</div>
+        <div class="step-dot" data-step="2">2. Energy</div>
+        <div class="step-dot" data-step="3">3. Diet</div>
+        <div class="step-dot" data-step="4">4. Waste</div>
+      </div>
+
+      <form id="calc-form" class="modal-body">
+        
+        <!-- Step 1: Transport -->
+        <div class="form-step active" id="step-1">
+          <h3>🚗 Transportation Habits</h3>
+          <p class="form-guide">Your transport emissions depend heavily on mileage and vehicle engine type.</p>
+          
+          <div class="form-group">
+            <label for="transportType">Primary Transportation Mode</label>
+            <select id="transportType" name="transportType" required>
+              <option value="gas">Gasoline/Diesel Car</option>
+              <option value="hybrid" selected>Hybrid Passenger Car</option>
+              <option value="electric">Electric Vehicle (EV)</option>
+              <option value="transit">Public Transit (Bus / Train)</option>
+              <option value="none">No Driving / Cycle / Walk only</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="distance-group">
+            <label for="transportDistance">Annual Distance (kilometers/year)</label>
+            <div class="slider-container">
+              <input type="range" id="transportDistance" name="transportDistance" min="0" max="40000" step="500" value="12000">
+              <div class="slider-value"><span id="distance-val">12,000</span> km/yr</div>
+            </div>
+            <p class="input-hint">Average commuter drives about 12,000 to 15,000 km per year.</p>
+          </div>
+        </div>
+
+        <!-- Step 2: Home Energy -->
+        <div class="form-step" id="step-2">
+          <h3>⚡ Home Energy Usage</h3>
+          <p class="form-guide">Electricity and natural gas are critical contributors to residential CO2.</p>
+          
+          <div class="form-group">
+            <label for="electricity">Monthly Electricity Consumption (kWh/month)</label>
+            <div class="slider-container">
+              <input type="range" id="electricity" name="electricity" min="0" max="1500" step="20" value="350">
+              <div class="slider-value"><span id="electricity-val">350</span> kWh</div>
+            </div>
+            <p class="input-hint">An average small household consumes around 300-400 kWh/month.</p>
+          </div>
+
+          <div class="form-group">
+            <label for="gas">Monthly Natural Gas Consumption (kWh/month)</label>
+            <div class="slider-container">
+              <input type="range" id="gas" name="gas" min="0" max="1000" step="10" value="150">
+              <div class="slider-value"><span id="gas-val">150</span> kWh</div>
+            </div>
+            <p class="input-hint">Used primarily for space heating and hot water (approx. 100-200 kWh/month).</p>
+          </div>
+        </div>
+
+        <!-- Step 3: Diet -->
+        <div class="form-step" id="step-3">
+          <h3>🍽️ Food & Diet</h3>
+          <p class="form-guide">Food production, processing, and transportation represent up to 25% of global emissions.</p>
+          
+          <div class="form-group">
+            <label>Describe your daily dietary habits:</label>
+            <div class="radio-card-grid">
+              <label class="radio-card">
+                <input type="radio" name="diet" value="high_meat">
+                <div class="radio-card-content">
+                  <span class="emoji">🥩</span>
+                  <h4>Meat Lover</h4>
+                  <p>Regular red meat and poultry meals (daily).</p>
+                </div>
+              </label>
+
+              <label class="radio-card checked">
+                <input type="radio" name="diet" value="med_meat" checked>
+                <div class="radio-card-content">
+                  <span class="emoji">🍗</span>
+                  <h4>Average / Mixed</h4>
+                  <p>Balanced diet, occasional red meat, moderate poultry.</p>
+                </div>
+              </label>
+
+              <label class="radio-card">
+                <input type="radio" name="diet" value="veg">
+                <div class="radio-card-content">
+                  <span class="emoji">🧀</span>
+                  <h4>Vegetarian</h4>
+                  <p>No meat or fish, regular eggs and dairy.</p>
+                </div>
+              </label>
+
+              <label class="radio-card">
+                <input type="radio" name="diet" value="vegan">
+                <div class="radio-card-content">
+                  <span class="emoji">🥗</span>
+                  <h4>Vegan</h4>
+                  <p>100% plant-based food items only.</p>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Waste -->
+        <div class="form-step" id="step-4">
+          <h3>♻️ Waste & Consumption</h3>
+          <p class="form-guide">Methane emissions from landfills are heavily reduced by active recycling and composting habits.</p>
+          
+          <div class="form-group">
+            <label>How active is your household in recycling and waste reduction?</label>
+            <div class="radio-card-grid">
+              <label class="radio-card">
+                <input type="radio" name="waste" value="high">
+                <div class="radio-card-content">
+                  <span class="emoji">🗑️</span>
+                  <h4>Minimal Effort</h4>
+                  <p>Most items end up in standard trash bin; no compost.</p>
+                </div>
+              </label>
+
+              <label class="radio-card checked">
+                <input type="radio" name="waste" value="med" checked>
+                <div class="radio-card-content">
+                  <span class="emoji">📦</span>
+                  <h4>Moderate Recycling</h4>
+                  <p>Recycle papers, plastics, and glass; some waste awareness.</p>
+                </div>
+              </label>
+
+              <label class="radio-card">
+                <input type="radio" name="waste" value="low">
+                <div class="radio-card-content">
+                  <span class="emoji">🍎</span>
+                  <h4>Zero Waste Hero</h4>
+                  <p>Rigorous recycling, active composting, minimal plastic purchases.</p>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Modal Footer Routing -->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="calc-prev-btn" disabled>Back</button>
+        <button class="btn btn-primary" id="calc-next-btn">Next Step</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
